@@ -128,6 +128,45 @@ int main() {
                         }
 			printf("\n");
 		}
+
+		for (i=0; l->seq[i]!=0; i++) {
+			char **cmd = l->seq[i];
+			pid_t pid = fork();
+			switch (pid)
+			{
+				case -1:
+					perror("fork");
+					exit(1);
+				case 0:
+					if (l->bg) [
+						pid_t pid2 = fork();
+						switch (pid2)
+						{
+							case -1:
+								perror("fork");
+								exit(1);
+							case 0:
+								if (execvp(cmd[0], cmd) == -1) {
+									perror("execvp");
+									exit(1);
+								}
+								break;
+							default:
+								exit(0);
+								break;
+						}
+					]
+					continue;
+				default:
+					waitpid(pid, NULL, 0);
+					break;
+			}
+
+			if (execvp(cmd[0], cmd) == -1) {
+				perror("execvp");
+				exit(1);
+			}
+		}
 	}
 
 }
