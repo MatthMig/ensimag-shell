@@ -156,10 +156,10 @@ int main() {
 								break;
 						}
 					]
-					continue;
+					break;;
 				default:
 					waitpid(pid, NULL, 0);
-					break;
+					continue;
 			}
 
 			if (execvp(cmd[0], cmd) == -1) {
