@@ -21,3 +21,5 @@
 
 # ignore build directory
 build/
+
+.vscode/
